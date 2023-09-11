@@ -3,5 +3,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
+}
+.HomeTitle{
+    width: 1024px;
+    font-size: 20px;
+    margin: 0;
 }
