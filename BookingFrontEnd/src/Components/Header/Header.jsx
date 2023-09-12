@@ -13,9 +13,12 @@ import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ type }) => {
+    const navigate = useNavigate();
     const [Opendate, setOpendate] = useState(false);
+    const [destination, setdestination] = useState("");
     const [openOption, setopenOption] = useState(false);
     const [options, setoptions] = useState({
         adult: 1,
@@ -37,6 +40,10 @@ const Header = ({ type }) => {
             };
         });
     };
+    const handleSearch = (event) => {
+        event.preventDefault()
+        navigate("/Hotels", { state: { destination, date, options } })
+    }
     return (
         <>
             <div className="header">
@@ -77,6 +84,7 @@ const Header = ({ type }) => {
                                         type="text"
                                         placeholder="Where are you goint"
                                         className="headerSearchInput"
+                                        onChange={e => setdestination(e.target.value)}
                                     />
                                 </div>
                             </div>
@@ -101,6 +109,7 @@ const Header = ({ type }) => {
                                             moveRangeOnFirstSelection={false}
                                             ranges={date}
                                             className="date"
+                                            minDate={new Date()}
                                         />
                                     )}
                                 </div>
@@ -175,7 +184,7 @@ const Header = ({ type }) => {
                                 </div>
                             </div>
                             <div className="HeaderitemBox">
-                                <button className="headerbtn"> search</button>
+                                <button className="headerbtn" onClick={handleSearch}> search</button>
                             </div>
                         </div> </>}
                 </div>

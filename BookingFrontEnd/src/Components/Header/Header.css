@@ -4,6 +4,7 @@
     color: White;
     display: flex;
     justify-content: center;
+    font-size: 14px;
 }
 
 .HeaderContainer {
@@ -13,7 +14,7 @@
 }
 
 .HeaderContainer.listMode {
-    margin: 20px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
 }
 
 .Headerlist {
@@ -21,7 +22,10 @@
     gap: 40px;
     margin-bottom: 50px;
 }
-
+.Headertitel{
+    font-size:32px;
+    margin: 0px !important;
+}
 .headerlistItem {
     display: flex;
     align-items: center;
@@ -30,12 +34,13 @@
 
 .headerlistItem.active {
     border: 1px solid white;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 20px;
 }
 
 .headerdisc {
-    margin: 20px 0px;
+    margin-bottom: 20px;
+    font-size: 20px;
 }
 
 .headerbtn {

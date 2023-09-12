@@ -10,26 +10,27 @@ const Footer = () => {
                         <li className="flistItem">Regions</li>
                         <li className="flistItem">Cities</li>
                         <li className="flistItem">Districts</li>
-                        <li className="flistItem">Airports</li>
-                        <li className="flistItem">Hotels</li>
                     </ul>
                     <ul className="flist">
                         <li className="flistItem">contries</li>
                         <li className="flistItem">Regions</li>
                         <li className="flistItem">Cities</li>
                         <li className="flistItem">Districts</li>
-                        <li className="flistItem">Airports</li>
-                        <li className="flistItem">Hotels</li>
                     </ul>
                     <ul className="flist">
                         <li className="flistItem">contries</li>
                         <li className="flistItem">Regions</li>
                         <li className="flistItem">Cities</li>
                         <li className="flistItem">Districts</li>
-                        <li className="flistItem">Airports</li>
-                        <li className="flistItem">Hotels</li>
+                    </ul>
+                    <ul className="flist">
+                        <li className="flistItem">contries</li>
+                        <li className="flistItem">Regions</li>
+                        <li className="flistItem">Cities</li>
+                        <li className="flistItem">Districts</li>
                     </ul>
                 </div>
+            <div className="ftext">Copyright @ 2023 bookingwebsite</div>
             </div>
         </>
     )
