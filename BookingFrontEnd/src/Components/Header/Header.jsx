@@ -47,8 +47,9 @@ const Header = ({ type }) => {
     return (
         <>
             <div className="header">
-                <div className="HeaderContainer">
-                    <div className={type === "list" ? "Headerlist listMode" : "Headerlist"}>
+                <div className="HeaderContainer"
+                    style={{ margin: type === "list" ? "20px 0px 10px 0px" : "20px 0px 100px 0px" }}>
+                    <div className={type === "list" ? "listMode Headerlist " : "Headerlist"}>
                         <div className="headerlistItem active">
                             <BiSolidHotel />
                             <span className="Stays">Stays</span>

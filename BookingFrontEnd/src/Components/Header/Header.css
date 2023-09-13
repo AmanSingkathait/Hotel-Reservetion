@@ -14,7 +14,7 @@
 }
 
 .HeaderContainer.listMode {
-    margin: 10px 0px 0px 0px;
+    margin: 5px !important;
 }
 
 .Headerlist {
