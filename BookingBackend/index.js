@@ -25,6 +25,17 @@ app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomRoute);
 
+app.use((err,req,res,next)=>{
+    const errorstatus = err.status || 500
+    const errormessage = err.message || "something went wrong!"
+    return res.status(errorstatus).json({
+        success:false,
+        status:errorstatus,
+        message:errormessage,
+        stack:err.stack
+    })
+})
+
 app.listen(port, () => {
     connectMongoDB(); // connect with mongodb
     console.log(`listening at the port ${port}`)

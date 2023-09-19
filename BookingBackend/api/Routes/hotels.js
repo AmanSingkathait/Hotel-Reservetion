@@ -1,6 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const Hotel = require('../Models/HotelsModels');
+const createError = require('../Utils/error')
 
 //CREATE 
 route.post("/", async (req, res) => {
@@ -42,12 +43,14 @@ route.get("/:id", async (req, res) => {
 })
 
 //GET ALL
-route.get("/", async (req, res) => {
+route.get("/", async (req, res, next) => {
+    // const failed = true;
+    // if (failed) return next(createError(401, "you are not authanticate"));
     try {
         const userhotel = await Hotel.find();
         res.status(200).json(userhotel)
     } catch (e) {
-        res.status(500).json(e);
+        next(e)
     }
 })
 
