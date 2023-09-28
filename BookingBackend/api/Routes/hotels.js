@@ -3,6 +3,7 @@ const route = express.Router();
 const Hotel = require('../Models/HotelsModels');
 const createError = require('../Utils/error')
 
+
 //CREATE 
 route.post("/", async (req, res) => {
     const newHotel = new Hotel(req.body);

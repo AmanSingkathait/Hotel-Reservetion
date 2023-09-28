@@ -5,6 +5,7 @@ const authRoute = require('./api/Routes/auth')
 const usersRoute = require('./api/Routes/users');
 const hotelsRoute = require('./api/Routes/hotels');
 const roomRoute = require('./api/Routes/room');
+const cookieParser = require('cookie-parser');
 
 
 const app = express();
@@ -17,11 +18,12 @@ app.get("/", (req, res) => {
 })
 
 // ---> middleware 
+app.use(cookieParser());
 app.use(express.json())
 
 // --> using the middleware
 app.use("/api/auth", authRoute);
-app.use("/api/users", usersRoute);
+app.use("/api/users", usersRoute); 
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomRoute);
 
