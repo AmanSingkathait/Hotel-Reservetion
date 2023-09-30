@@ -14,7 +14,7 @@ const verfyToken = (req,res,next)=>{
 }
 
 const verfyUser = (req,res,next)=>{
-    verfyToken(req,res,()=>{
+    verfyToken(req,res,next,()=>{
         if(req.user.id == req.params.id || req.user.isAdmin){
             next()
         }else{
@@ -24,7 +24,7 @@ const verfyUser = (req,res,next)=>{
 }
 
 const verifyAdmin = (req,res,next)=>{
-    verfyToken(req,res,()=>{
+    verfyToken(req,res,next,()=>{
         if(req.user.isAdmin){
             next()
         }else{
