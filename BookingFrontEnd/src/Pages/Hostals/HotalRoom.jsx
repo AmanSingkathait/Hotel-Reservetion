@@ -55,7 +55,7 @@ const HotalRoom = () => {
     const handleModel = (i) => {
         setSliderNuber(i);
         setModelOpen(true);
-        console.log(Photos.length - 1)
+        // console.log(Photos.length - 1)
     };
     const handelmove = (direction) => {
         let newSlideNumber;

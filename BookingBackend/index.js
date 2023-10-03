@@ -6,7 +6,7 @@ const usersRoute = require('./api/Routes/users');
 const hotelsRoute = require('./api/Routes/hotels');
 const roomRoute = require('./api/Routes/room');
 const cookieParser = require('cookie-parser');
-
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 2000;
@@ -18,23 +18,24 @@ app.get("/", (req, res) => {
 })
 
 // ---> middleware 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json())
 
 // --> using the middleware
 app.use("/api/auth", authRoute);
-app.use("/api/users", usersRoute); 
+app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomRoute);
 
-app.use((err,req,res,next)=>{
+app.use((err, req, res, next) => {
     const errorstatus = err.status || 500
     const errormessage = err.message || "something went wrong!"
     return res.status(errorstatus).json({
-        success:false,
-        status:errorstatus,
-        message:errormessage,
-        stack:err.stack
+        success: false,
+        status: errorstatus,
+        message: errormessage,
+        stack: err.stack
     })
 })
 

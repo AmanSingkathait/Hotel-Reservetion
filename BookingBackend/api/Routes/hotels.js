@@ -34,7 +34,7 @@ route.delete("/:id", verifyAdmin, async (req, res) => {
     }
 })
 //GET
-route.get("/:id", async (req, res) => {
+route.get("/find/:id", async (req, res) => {
     try {
         const userhotel = await Hotel.findById(req.params.id);
         res.status(200).json(userhotel)
@@ -52,6 +52,36 @@ route.get("/", async (req, res, next) => {
         res.status(200).json(userhotel)
     } catch (e) {
         next(e)
+    }
+})
+
+route.get('/CountByCity', async (req, res, next) => {
+    const cities = req.query.cities.split(",");
+    try {
+        const list = await Promise.all(cities.map(city => {
+            return Hotel.countDocuments({ city: city })
+        }))
+        res.status(200).json(list)
+    } catch (e) {
+        next(e)
+    }
+})
+route.get('/CountByType', async (req, res, next) => {
+    try {
+        const hotelcount = await Hotel.countDocuments({ type: "hotel" })
+        const apartmentCount = await Hotel.countDocuments({ type: "apartment" })
+        const resortCount = await Hotel.countDocuments({ type: "resort" })
+        const villaCount = await Hotel.countDocuments({ type: "villa" })
+        const cabinCount = await Hotel.countDocuments({ type: "cabin" })
+        res.status(200).json([
+            { type: "hotel", count: hotelcount },
+            { type: "apartment", count: apartmentCount },
+            { type: "resort", count: resortCount },
+            { type: "villa", count: villaCount },
+            { type: "cabin", count: cabinCount }
+        ])
+    } catch (error) {
+        next(error)
     }
 })
 
