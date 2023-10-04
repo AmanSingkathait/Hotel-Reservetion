@@ -17,7 +17,7 @@ const Featured = () => {
                             src="https://cf.bstatic.com/xdata/images/district/300x240/48076.jpg?k=0ba9fa3a12aeebc7f1347f7284a010d00e587988087352c9978c46fc48a3ba04&o="
                             alt=""
                             className="featuredImg"
-                        />
+                        />hot
                         <div className="featuredTitle">
                             <h1>Kashipur</h1>
                             <h2>{data[0]} properties</h2>

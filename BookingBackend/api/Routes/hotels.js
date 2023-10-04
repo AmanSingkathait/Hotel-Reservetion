@@ -44,11 +44,23 @@ route.get("/find/:id", async (req, res) => {
 })
 
 //GET ALL
+// route.get("/", async (req, res, next) => {
+//     // const failed = true;
+//     // if (failed) return next(createError(401, "you are not authanticate"));
+//     try {
+//         const userhotel = await Hotel.find();
+//         res.status(200).json(userhotel)
+//     } catch (e) {
+//         next(e)
+//     }
+// })
+
+// localhost:2000/api/hotels?featured=false&min=1000&max=3000
+
 route.get("/", async (req, res, next) => {
-    // const failed = true;
-    // if (failed) return next(createError(401, "you are not authanticate"));
+    const { min, max, ...others } = req.query;
     try {
-        const userhotel = await Hotel.find();
+        const userhotel = await Hotel.find({ ...others, leastPrice: { $gt: min | 999, $lt: max ||3999 } });
         res.status(200).json(userhotel)
     } catch (e) {
         next(e)
