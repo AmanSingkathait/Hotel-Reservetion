@@ -5,7 +5,6 @@ const Featured = () => {
     const { data, loading } = useRequest(
         "http://localhost:2000/api/hotels/CountByCity?cities=Ramnager,peerumadara,kashipur"
     );
-    console.log(data);
     return (
         <div className="FeaturedContent">
             {loading ? (

@@ -1,13 +1,13 @@
 import "./List.css"
-
-
 import Navbar from "../../Components/Navbar/Navbar"
 import Header from "../../Components/Header/Header"
 import { useLocation } from "react-router-dom"
 import { useState } from "react"
 import { format } from "date-fns"
 import { DateRange } from "react-date-range"
-import SearchItem from "../../Components/SeatchItem/SearchItem"
+import SearchItem from "../../Components/SeatchItem/SearchItem";
+import useRequest from "../../Hooks/useRequest"
+
 
 const List = () => {
     const location = useLocation();
@@ -15,6 +15,8 @@ const List = () => {
     const [date, setDate] = useState(location.state.date);
     const [options, setoptions] = useState(location.state.options);
 
+    const { data, loading } = useRequest(`http://localhost:2000/api/hotels?city=${destination}`);
+    console.log(data)
     // console.log(location)
     return (
         <>
@@ -55,29 +57,29 @@ const List = () => {
                                     <span className="lsOptionText">
                                         Adult
                                     </span>
-                                    <input type="number" min={1} className="lsOptionInput" placeholder={options.adult}/>
+                                    <input type="number" min={1} className="lsOptionInput" placeholder={options.adult} />
                                 </div>
                                 <div className="lsOptionItem">
                                     <span className="lsOptionText">
                                         Children
                                     </span>
-                                    <input type="number" min={0} className="lsOptionInput" placeholder={options.children}/>
+                                    <input type="number" min={0} className="lsOptionInput" placeholder={options.children} />
                                 </div>
                                 <div className="lsOptionItem">
                                     <span className="lsOptionText">
                                         Room
                                     </span>
-                                    <input type="number" min={1} className="lsOptionInput" placeholder={options.room}/>
+                                    <input type="number" min={1} className="lsOptionInput" placeholder={options.room} />
                                 </div>
                             </div>
                             <button> Search</button>
                         </div>
                         <div className="listResult">
-                            <SearchItem/>
-                            <SearchItem/>
-                            <SearchItem/>
-                            <SearchItem/>
-                            <SearchItem/>
+                            {loading ? loading : <>
+                                {data.map(item => {
+                                    return <SearchItem key={item._id} item={item} />
+                                })}
+                            </>}
                         </div>
                     </div>
                 </div>
