@@ -66,13 +66,15 @@
     font-size: 12px;
     text-align: center;
 }
-.lsOptionItem span{
+
+.lsOptionItem span {
     font-size: 14px;
 }
-.lsOptionItem span small{
+
+.lsOptionItem span small {
     font-size: 12px;
     padding: 2.5px 5px;
-    background-color:#0071c2;
+    background-color: #0071c2;
     color: #fff;
     margin-left: 5px;
 }
@@ -83,7 +85,7 @@
     padding-left: 5px;
 }
 
-.lsOptionInput::placeholder{
+.lsOptionInput::placeholder {
     padding: 7px;
 }
 

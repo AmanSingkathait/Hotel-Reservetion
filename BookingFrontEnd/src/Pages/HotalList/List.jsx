@@ -14,10 +14,17 @@ const List = () => {
     const [destination, setdestination] = useState(location.state.destination);
     const [date, setDate] = useState(location.state.date);
     const [options, setoptions] = useState(location.state.options);
-
-    const { data, loading } = useRequest(`http://localhost:2000/api/hotels?city=${destination}`);
+    const [minPrice, setminPrice] = useState(undefined);
+    const [maxPrice, setmaxPrice] = useState(undefined);
+    const { data, loading ,reFetch} = useRequest(`http://localhost:2000/api/hotels?city=${destination}&min=${minPrice || 0}&max=${maxPrice || 9999}`);
+    
+    
     console.log(data)
     // console.log(location)
+
+    const handleSearchClick = ()=>{
+        reFetch();
+    }
     return (
         <>
             <div>
@@ -45,13 +52,13 @@ const List = () => {
                                     <span className="lsOptionText">
                                         Min Price <small> per night </small>
                                     </span>
-                                    <input type="number" className="lsOptionInput" />
+                                    <input type="number" min={900} step="100"  className="lsOptionInput" onChange={(e)=>{setminPrice(e.target.value)}}/>
                                 </div>
                                 <div className="lsOptionItem">
                                     <span className="lsOptionText">
                                         Max Price <small> per night </small>
                                     </span>
-                                    <input type="number" className="lsOptionInput" />
+                                    <input type="number" min={1200} step="100"  className="lsOptionInput" onChange={(e)=>{setmaxPrice(e.target.value)}}/>
                                 </div>
                                 <div className="lsOptionItem">
                                     <span className="lsOptionText">
@@ -72,7 +79,7 @@ const List = () => {
                                     <input type="number" min={1} className="lsOptionInput" placeholder={options.room} />
                                 </div>
                             </div>
-                            <button> Search</button>
+                            <button onClick={handleSearchClick}> Search</button>
                         </div>
                         <div className="listResult">
                             {loading ? loading : <>

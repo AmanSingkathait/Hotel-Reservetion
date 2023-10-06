@@ -10,10 +10,20 @@ import {
     FaCircleArrowLeft,
     FaCircleArrowRight,
 } from "react-icons/fa6";
+
+import useRequest from "../../Hooks/useRequest";
+import { useLocation } from "react-router-dom";
 // import { BiCaretLeft,BiCaretRight} from "react-icons/bi";
 const HotalRoom = () => {
+    const location = useLocation();
     const [SliderNuber, setSliderNuber] = useState(0);
     const [ModelOpen, setModelOpen] = useState(false);
+    const idArray = location.pathname.split("/");
+    const id = idArray[2];
+    console.log(id)
+
+    const { data, loading } = useRequest(`http://localhost:2000/api/hotels/find/${id}`);
+
     const Photos = [
         {
             src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/485695278.jpg?k=02c90664cc5afb7558a5d2fb3668270cf15de8f1b99b55f722f30372cac7eaf8&o=&hp=1",
@@ -21,24 +31,6 @@ const HotalRoom = () => {
         {
             src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/485695247.jpg?k=9ff9f6b78d1cdcb4c24ad08cdb4ff6f72c5157acd900f597f67a9e629a65ab3a&o=&hp=1",
         },
-        // {
-        //     src: "https://images.unsplash.com/photo-1615874959474-d609969a20ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
-        // },
-        // {
-        //     src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/485695247.jpg?k=9ff9f6b78d1cdcb4c24ad08cdb4ff6f72c5157acd900f597f67a9e629a65ab3a&o=&hp=1",
-        // },
-        // {
-        //     src: "https://images.pexels.com/photos/1454806/pexels-photo-1454806.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        // },
-        // {
-        //     src: "https://images.pexels.com/photos/210265/pexels-photo-210265.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-        // },
-        // {
-        //     src: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        // },
-        // {
-        //     src: "https://images.pexels.com/photos/7027791/pexels-photo-7027791.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-        // },
         {
             src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/472494194.jpg?k=244369259dd0d584da6eaa4ca9b56b6d5e2261b457825138c78b433c948e48b8&o=&hp=1",
         },
@@ -70,7 +62,7 @@ const HotalRoom = () => {
         <div>
             <Navbar />
             <Header type="list" />
-            <div className="hotelContainer">
+            {loading ? "loading" : <div className="hotelContainer">
                 {ModelOpen && (
                     <div className="slider">
                         <FaCircleArrowLeft
@@ -92,16 +84,16 @@ const HotalRoom = () => {
                 )}
                 <div className="hotelWrapper">
                     <button className="bookNow">Reserve or Book Now!</button>
-                    <h1 className="hotelTitle">Tower Street Apartments</h1>
+                    <h1 className="hotelTitle">{data.name}</h1>
                     <div className="hotelAddress">
                         <FaLocationDot />
-                        <span>Elton St 125 New york</span>
+                        <span>{data.city} {data.address}</span>
                     </div>
                     <span className="hotelDistance">
-                        Excellent location – 500m from center
+                        Excellent location – {data.distance}m from center
                     </span>
                     <span className="hotelPriceHighlight">
-                        Book a stay over $114 at this property and get a free airport taxi
+                        Book a stay over ${data.leastPrice} at this property and get a free airport taxi
                     </span>
                     <div className="hotelImages">
                         {Photos.map((photo, i) => (
@@ -139,7 +131,7 @@ const HotalRoom = () => {
                                 excellent location score of 9.8!
                             </span>
                             <h2>
-                                <b>$945</b> (9 nights)
+                                <b>${data.leastPrice}</b> (9 nights)
                             </h2>
                             <button>Reserve or Book Now!</button>
                         </div>
@@ -147,7 +139,7 @@ const HotalRoom = () => {
                 </div>
                 <MailList />
                 <Footer />
-            </div>
+            </div>}
         </div>
     );
 };

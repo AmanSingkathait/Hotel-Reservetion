@@ -19,7 +19,7 @@ const useRequest = (url) => {
             }
         }
         fetchData();
-    }, [url])
+    }, [])
 
     const reFetch = async () => {
         setloading(true)

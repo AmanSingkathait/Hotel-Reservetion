@@ -1,8 +1,18 @@
 import { } from "react"
 import PropTypes from 'prop-types';
 import "./SearchItem.css"
+import { useNavigate } from "react-router-dom";
+// import useRequest from "../../Hooks/useRequest";
 
-const SearchItem = ({ item }) => {
+const SearchItem = ({item }) => {
+    const navigate = useNavigate();
+    // const { data, loading } = useRequest(`http://localhost:2000/api/hotels/find/${}`);
+    const hotelId = item._id;
+    console.log(hotelId)
+
+    const handleClick = ()=>{
+        navigate(`/Hotels/${hotelId}`);
+    }
     return (
         <>
             <div className="searchItem">
@@ -29,7 +39,7 @@ const SearchItem = ({ item }) => {
                     <div className="siDetailTexts">
                         <span className="siPrice">${item.leastPrice}</span>
                         <span className="siTaxOp">Includes taxes and fees</span>
-                        <button className="siCheckButton">See availability</button>
+                        <button className="siCheckButton" onClick={handleClick}>See availability</button>
                     </div>
                 </div>
             </div>
@@ -38,7 +48,8 @@ const SearchItem = ({ item }) => {
 }
 SearchItem.propTypes = {
     item: PropTypes.shape({
-        name: PropTypes.string, // Add this line to include 'name' prop
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string,
         type: PropTypes.string,
         city: PropTypes.string,
         address: PropTypes.string,
@@ -48,7 +59,6 @@ SearchItem.propTypes = {
         leastPrice: PropTypes.number,
         rating: PropTypes.number,
         featured: PropTypes.bool,
-        // Define propTypes for other properties as needed
     }).isRequired,
 };
 
