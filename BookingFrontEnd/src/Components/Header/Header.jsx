@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import "./Header.css";
 import {
@@ -14,18 +14,25 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../../Context/SearchContext";
+
 
 const Header = ({ type }) => {
     const navigate = useNavigate();
     const [Opendate, setOpendate] = useState(false);
     const [destination, setdestination] = useState("");
     const [openOption, setopenOption] = useState(false);
+    const [IsError, setIsError] = useState(false);
+
+    // TODO using the context --> (useContext)
+    const { dispatch } = useContext(SearchContext);
+
     const [options, setoptions] = useState({
         adult: 1,
         children: 0,
         room: 1,
     });
-    const [date, setdate] = useState([
+    const [dates, setdates] = useState([
         {
             startDate: new Date(),
             endDate: new Date(),
@@ -40,10 +47,24 @@ const Header = ({ type }) => {
             };
         });
     };
+
+    // TODO --> Handle the search operation 
     const handleSearch = (event) => {
         event.preventDefault();
-        navigate("/Hotels", { state: { destination, date, options } });
+        dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+
+        if (destination.trim() === '') {
+            setIsError(true)
+            return
+        }
+        navigate("/Hotels", { state: { destination, dates, options } });
     };
+
+    const handleDestination = (e) => {
+        setdestination(e.target.value);
+        setIsError(false);
+    }
+
     return (
         <>
             <div className="header">
@@ -94,8 +115,9 @@ const Header = ({ type }) => {
                                             type="text"
                                             placeholder="Where are you going"
                                             className="headerSearchInput"
-                                            onChange={(e) => setdestination(e.target.value)}
+                                            onChange={handleDestination}
                                         />
+                                        {IsError && <div className="ErrorMessage"> Please enter a destination to start searching.</div>}
                                     </div>
                                 </div>
                                 <div className="HeaderitemBox">
@@ -107,17 +129,17 @@ const Header = ({ type }) => {
                                                 setOpendate(!Opendate);
                                             }}
                                         >
-                                            {`${format(date[0].startDate, "MM/dd/yyyy")} To ${format(
-                                                date[0].endDate,
+                                            {`${format(dates[0].startDate, "MM/dd/yyyy")} To ${format(
+                                                dates[0].endDate,
                                                 "MM/dd/yyyy"
                                             )}`}
                                         </span>
                                         {Opendate && (
                                             <DateRange
                                                 editableDateInputs={true}
-                                                onChange={(item) => setdate([item.selection])}
+                                                onChange={(item) => setdates([item.selection])}
                                                 moveRangeOnFirstSelection={false}
-                                                ranges={date}
+                                                ranges={dates}
                                                 className="date"
                                                 minDate={new Date()}
                                             />

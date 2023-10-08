@@ -12,7 +12,7 @@ import useRequest from "../../Hooks/useRequest"
 const List = () => {
     const location = useLocation();
     const [destination, setdestination] = useState(location.state.destination);
-    const [date, setDate] = useState(location.state.date);
+    const [dates, setDates] = useState(location.state.dates);
     const [options, setoptions] = useState(location.state.options);
     const [minPrice, setminPrice] = useState(undefined);
     const [maxPrice, setmaxPrice] = useState(undefined);
@@ -40,10 +40,10 @@ const List = () => {
                             </div>
                             <div className="lsItem">
                                 <label>Ckeck-in Date </label>
-                                <span>{`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
-                                <DateRange onChange={(item) => setDate([item.selection])}
+                                <span>{`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(dates[0].endDate, "MM/dd/yyyy")}`}</span>
+                                <DateRange onChange={(item) => setDates([item.selection])}
                                     minDate={new Date()}
-                                    ranges={date}
+                                    ranges={dates}
                                 />
                             </div>
                             <div className="lsItem">

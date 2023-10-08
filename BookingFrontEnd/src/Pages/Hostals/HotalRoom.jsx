@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Footer from "../../Components/Footer/Footer";
 import Header from "../../Components/Header/Header";
 import MailList from "../../Components/MailList/MailList";
@@ -13,17 +13,25 @@ import {
 
 import useRequest from "../../Hooks/useRequest";
 import { useLocation } from "react-router-dom";
+import { SearchContext } from "../../Context/SearchContext";
+
+
+
 // import { BiCaretLeft,BiCaretRight} from "react-icons/bi";
+
+
 const HotalRoom = () => {
+    // TODO --> using the context API
+    const {dates} = useContext(SearchContext);
+    console.log(dates);
+
+
     const location = useLocation();
     const [SliderNuber, setSliderNuber] = useState(0);
     const [ModelOpen, setModelOpen] = useState(false);
     const idArray = location.pathname.split("/");
     const id = idArray[2];
-    console.log(id)
-
     const { data, loading } = useRequest(`http://localhost:2000/api/hotels/find/${id}`);
-
     const Photos = [
         {
             src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/485695278.jpg?k=02c90664cc5afb7558a5d2fb3668270cf15de8f1b99b55f722f30372cac7eaf8&o=&hp=1",
@@ -131,7 +139,7 @@ const HotalRoom = () => {
                                 excellent location score of 9.8!
                             </span>
                             <h2>
-                                <b>${data.leastPrice}</b> (9 nights)
+                                <b>${data.leastPrice*9}</b> (9 nights)
                             </h2>
                             <button>Reserve or Book Now!</button>
                         </div>
