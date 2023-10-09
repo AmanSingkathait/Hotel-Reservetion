@@ -5,12 +5,12 @@ const Navbar = () => {
         <>
             <div className="navbar">
                 <div className="navContainer">
-                    <Link to="/" style={{color:"inherit",textDecoration:"none"}}>
+                    <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                         <span className="logo"> lamobooking</span>
                     </Link>
                     <div className="navItems">
-                        <button className="navButton">Register</button>
-                        <button className="navButton">Login</button>
+                        <Link to="/Register" className="navButton">Register</Link>
+                        <Link to="/Login" className="navButton">Login</Link>
                     </div>
                 </div>
             </div>
