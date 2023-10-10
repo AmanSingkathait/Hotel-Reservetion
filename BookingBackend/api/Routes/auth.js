@@ -24,20 +24,20 @@ route.post('/register', async (req, res, next) => {
 })
 route.post('/LoginUser', async (req, res, next) => {
     try {
-        const { email } = req.body;
-        const userdata = await User.findOne({ email });
+        const userdata = await User.findOne({ username: req.body.username });
         if (!userdata) {
             return next(createError(404, "User not found"))
         }
         const isPasswordCorrect = await bcrypt.compare(req.body.password, userdata.password);
         if (!isPasswordCorrect) {
-            return next(createError(404, "Incorrect credencial"))
+            return next(createError(404, "Incorrect credentials"))
         }
         const token = jwt.sign({ id: userdata._id, isAdmin: userdata.isAdmin }, process.env.JWT_SECRET);
-        const { password, isAdmin, ...otherDetails } = userdata.toObject();
-        res.cookie("cookie_token", token, {
+
+        const { password, isAdmin, ...otherDetails } = userdata._doc;
+        res.cookie("access_token", token, {
             httpOnly: true,
-        }).status(202).json({ otherDetails, token })
+        }).status(200).json({ details: { ...otherDetails }, isAdmin });
     } catch (e) {
         next(e)
     }

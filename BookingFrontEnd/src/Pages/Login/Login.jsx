@@ -1,10 +1,12 @@
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../Context/AuthContext'
+import "./Login.css";
+
 
 const Login = () => {
     const { user, loading, error, dispatch } = useContext(AuthContext)
     const [Credentials, setCredentials] = useState({
-        email: undefined,
+        Username: undefined,
         password: undefined,
     })
     const handleInput = (e) => {
@@ -28,24 +30,31 @@ const Login = () => {
                 body: JSON.stringify(Credentials)
             });
             if (!response.ok) {
-                const data = await response.json();
-                dispatch({ type: "LOGIN_FAILURE", payload: data.error });
+                const errorData = await response.json();
+                dispatch({ type: "LOGIN_FAILURE", payload: errorData || "An error occurred" });
             } else {
                 const data = await response.json();
-                dispatch({ type: "LOGIN_SUCCESS", payload: data.user });
+                dispatch({ type: "LOGIN_SUCCESS", payload: data.details });
             }
-        } catch (error) {
-            console.error("An error occurred:", error);
-            dispatch({ type: "LOGIN_FAILURE", payload: error });
+        } catch (err) {
+            console.error("An error occurred:", err);
+            dispatch({ type: "LOGIN_FAILURE", payload: "An error occurred" });
         }
     };
     console.log(user);
     return (
         <div className='login'>
             <div className="cantainer">
+                <h1 className='Heading'>Log in </h1>
                 <form >
-                    <input type='email' placeholder='User Email' name='email' required className='InputField' onChange={handleInput} />
-                    <input type="text" name="password" className="InputField" required onChange={handleInput} />
+                    <div className="inputbox">
+                        <p>UserName </p>
+                        <input type="text" placeholder='Jane' name='Username' required className='InputField' onChange={handleInput} />
+                    </div>
+                    <div className="inputbox">
+                        <p>password</p>
+                        <input type="password" name="password" placeholder="Enter Your Password" className="InputField" required onChange={handleInput} />
+                    </div>
                     <button className='loginBtn' onClick={handlesubmit}>Login</button>
                     {error && <span> {error.message} </span>}
                 </form>

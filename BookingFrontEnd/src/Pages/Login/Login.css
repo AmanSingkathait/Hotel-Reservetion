@@ -1,0 +1,60 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.cantainer {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px;
+}
+
+.cantainer .Heading {
+    text-align: center;
+}
+.inputbox{
+    margin: 10px 0px;
+}
+.inputbox > p {
+    font-size: 14px;
+    padding: 0px 0px 5px 0px;
+    margin: 0;
+    margin-left: 5px;
+}
+.InputField{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    /*  provide it background color */
+    background-color: #ebecee;
+    box-sizing: border-box;
+    outline: none; 
+}
+.loginBtn{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #0071c2;
+    color: white;
+}
+/*  style the placeholder */
+::-webkit-input-placeholder{
+    font-size: 14px;
+    padding: 0px 0px 5px 0px;
+    margin: 0;
+    margin-left: 5px;
+    color: #818181;
+
+}
