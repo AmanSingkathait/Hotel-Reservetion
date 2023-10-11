@@ -12,8 +12,10 @@ import {
 } from "react-icons/fa6";
 
 import useRequest from "../../Hooks/useRequest";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
+import { AuthContext } from "../../Context/AuthContext";
+import ReservePage from "../ReservePage/ReservePage";
 
 
 
@@ -23,7 +25,8 @@ import { SearchContext } from "../../Context/SearchContext";
 const HotalRoom = () => {
     // TODO --> using the context API
     const { dates, options } = useContext(SearchContext);
-    console.log(dates);
+    
+
     const MILLISECOUNS_PER_DAYS = 1000 * 60 * 60 * 24;
     function dayDifference(date1, date2) {
         const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -35,6 +38,7 @@ const HotalRoom = () => {
     const location = useLocation();
     const [SliderNuber, setSliderNuber] = useState(0);
     const [ModelOpen, setModelOpen] = useState(false);
+    const [openRoomBook, setopenRoomBook] = useState(false);
     const idArray = location.pathname.split("/");
     const id = idArray[2];
     const { data, loading } = useRequest(`http://localhost:2000/api/hotels/find/${id}`);
@@ -71,6 +75,16 @@ const HotalRoom = () => {
             newSlideNumber = SliderNuber === (Photos.length - 1) ? 0 : SliderNuber + 1;
         }
         setSliderNuber(newSlideNumber);
+    }
+    const navigate = useNavigate();
+    const {user}=useContext(AuthContext);
+    const handleClick = (e)=>{
+        e.preventDefault();
+        if(user){
+            setopenRoomBook(true);
+        }else{
+            navigate("/login");
+        }
     }
     return (
         <div>
@@ -147,13 +161,14 @@ const HotalRoom = () => {
                             <h2>
                                 <b>₹{data.leastPrice * days * options.room}</b> ({days} nights)
                             </h2>
-                            <button>Reserve or Book Now!</button>
+                            <button onClick={handleClick}>Reserve or Book Now!</button>
                         </div>
                     </div>
                 </div>
                 <MailList />
                 <Footer />
             </div>}
+            {openRoomBook && <ReservePage setOpen={setopenRoomBook} />}
         </div>
     );
 };

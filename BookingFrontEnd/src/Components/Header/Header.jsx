@@ -15,9 +15,11 @@ import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../Context/SearchContext";
+import { AuthContext } from "../../Context/AuthContext";
 
 
 const Header = ({ type }) => {
+    const {user} = useContext(AuthContext);
     const navigate = useNavigate();
     const [Opendate, setOpendate] = useState(false);
     const [destination, setdestination] = useState("");
@@ -52,7 +54,6 @@ const Header = ({ type }) => {
     const handleSearch = (event) => {
         event.preventDefault();
         dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
-
         if (destination.trim() === '') {
             setIsError(true)
             return
@@ -106,7 +107,7 @@ const Header = ({ type }) => {
                                 get rewarded for your travels unlock instant saving of 10% or
                                 more with a free lamabooking amount
                             </p>
-                            <button className="headerbtn"> sign In / Register </button>
+                            {!user && <button className="headerbtn"> sign In / Register </button>}
                             <div className="Headersearch">
                                 <div className="HeaderitemBox">
                                     <div className="headerSearchItem">

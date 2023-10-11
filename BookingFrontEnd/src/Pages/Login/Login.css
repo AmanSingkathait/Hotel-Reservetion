@@ -38,15 +38,21 @@
     box-sizing: border-box;
     outline: none; 
 }
-.loginBtn{
+.loginBtn,.backbtn{
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: none;
     outline: none;
+    font-weight: 500;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     background-color: #0071c2;
+    color: white;
+}
+.backbtn{
+    margin-top: 1rem;
+    background-color: #c20000e3;
     color: white;
 }
 /*  style the placeholder */
@@ -56,5 +62,10 @@
     margin: 0;
     margin-left: 5px;
     color: #818181;
-
+}
+.errorMessage{
+    margin: 1rem 0rem;
+    font-size: 14px;
+    color: #c20000e3;
+    font-weight: 500;
 }

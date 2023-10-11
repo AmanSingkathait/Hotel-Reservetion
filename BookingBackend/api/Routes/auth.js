@@ -33,10 +33,11 @@ route.post('/LoginUser', async (req, res, next) => {
             return next(createError(404, "Incorrect credentials"))
         }
         const token = jwt.sign({ id: userdata._id, isAdmin: userdata.isAdmin }, process.env.JWT_SECRET);
-
         const { password, isAdmin, ...otherDetails } = userdata._doc;
         res.cookie("access_token", token, {
+            domain: "localhost",
             httpOnly: true,
+            secure: false,
         }).status(200).json({ details: { ...otherDetails }, isAdmin });
     } catch (e) {
         next(e)

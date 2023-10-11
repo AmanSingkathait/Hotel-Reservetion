@@ -29,3 +29,16 @@
     font-weight: 500;
     background-color: #ebecee;
 }
+.flexItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flexItem .para{
+    margin: 0;
+    font-size: 16px;
+    padding: .2rem 1rem;
+    border-radius: 5px;
+    color:#003580;
+    background-color: #ebecee;
+}

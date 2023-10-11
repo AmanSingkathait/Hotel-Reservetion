@@ -28,7 +28,7 @@ route.put("/:id", verifyAdmin, async (req, res) => {
 route.delete("/:id", verifyAdmin, async (req, res) => {
     try {
         await Hotel.findByIdAndDelete(req.params.id);
-        res.status(200).json("hotel has been deleted succesfully")
+        res.status(200).json("hotel has been deleted successfully")
     } catch (e) {
         res.status(500).json(e);
     }
@@ -45,8 +45,8 @@ route.get("/find/:id", async (req, res) => {
 
 //GET ALL
 // route.get("/", async (req, res, next) => {
-//     // const failed = true;
-//     // if (failed) return next(createError(401, "you are not authanticate"));
+//      const failed = true;
+//     if (failed) return next(createError(401, "you are not authanticate"));
 //     try {
 //         const userhotel = await Hotel.find();
 //         res.status(200).json(userhotel)
