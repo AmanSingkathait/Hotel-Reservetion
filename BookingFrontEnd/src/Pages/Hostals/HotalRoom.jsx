@@ -25,7 +25,7 @@ import ReservePage from "../ReservePage/ReservePage";
 const HotalRoom = () => {
     // TODO --> using the context API
     const { dates, options } = useContext(SearchContext);
-    
+
 
     const MILLISECOUNS_PER_DAYS = 1000 * 60 * 60 * 24;
     function dayDifference(date1, date2) {
@@ -39,7 +39,7 @@ const HotalRoom = () => {
     const [SliderNuber, setSliderNuber] = useState(0);
     const [ModelOpen, setModelOpen] = useState(false);
     const [openRoomBook, setopenRoomBook] = useState(false);
-    const idArray = location.pathname.split("/");
+    const idArray = location.pathname.split("/"); 3
     const id = idArray[2];
     const { data, loading } = useRequest(`http://localhost:2000/api/hotels/find/${id}`);
     const Photos = [
@@ -77,12 +77,14 @@ const HotalRoom = () => {
         setSliderNuber(newSlideNumber);
     }
     const navigate = useNavigate();
-    const {user}=useContext(AuthContext);
-    const handleClick = (e)=>{
+    const { user } = useContext(AuthContext);
+
+    const handleClick = (e) => {
         e.preventDefault();
-        if(user){
+        if (user) {
             setopenRoomBook(true);
-        }else{
+            console.log("event fired");
+        } else {
             navigate("/login");
         }
     }
@@ -111,7 +113,7 @@ const HotalRoom = () => {
                     </div>
                 )}
                 <div className="hotelWrapper">
-                    <button className="bookNow">Reserve or Book Now!</button>
+                    <button className="bookNow" onClick={handleClick}>Reserve or Book Now!</button>
                     <h1 className="hotelTitle">{data.name}</h1>
                     <div className="hotelAddress">
                         <FaLocationDot />
@@ -168,7 +170,7 @@ const HotalRoom = () => {
                 <MailList />
                 <Footer />
             </div>}
-            {openRoomBook && <ReservePage setOpen={setopenRoomBook} />}
+            {openRoomBook && <ReservePage setopenRoomBook={setopenRoomBook} hotelId={id} />}
         </div>
     );
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const Hotel = require('../Models/HotelsModels');
+const Rooms = require('../Models/RoomModels');
 const createError = require('../Utils/error')
 const { verifyAdmin } = require('../Utils/VerifyToken');
 
@@ -94,6 +95,18 @@ route.get('/CountByType', async (req, res, next) => {
         ])
     } catch (error) {
         next(error)
+    }
+})
+
+route.get("/room/:id",async (req,res,next)=>{
+    try {
+        const UserData = await Hotel.findById(req.params.id);
+        const list = await Promise.all(UserData.rooms.map(room=>{
+            return Rooms.findById(room);
+        }))
+        res.status(200).json(list);
+    } catch (e) {
+        next(e);
     }
 })
 

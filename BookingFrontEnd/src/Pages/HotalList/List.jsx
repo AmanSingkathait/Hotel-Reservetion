@@ -17,8 +17,6 @@ const List = () => {
     const [minPrice, setminPrice] = useState(undefined);
     const [maxPrice, setmaxPrice] = useState(undefined);
     const { data, loading ,reFetch} = useRequest(`http://localhost:2000/api/hotels?city=${destination}&min=${minPrice || 0}&max=${maxPrice || 9999}`);
-    
-    
     console.log(data)
     // console.log(location)
 
