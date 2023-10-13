@@ -37,8 +37,9 @@ const HotalRoom = () => {
 
     const location = useLocation();
     const [SliderNuber, setSliderNuber] = useState(0);
+
     const [ModelOpen, setModelOpen] = useState(false);
-    const [openRoomBook, setopenRoomBook] = useState(false);
+
     const idArray = location.pathname.split("/"); 3
     const id = idArray[2];
     const { data, loading } = useRequest(`http://localhost:2000/api/hotels/find/${id}`);
@@ -79,10 +80,12 @@ const HotalRoom = () => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
 
+    const [openReserve, setopenReserve] = useState(false);
+    console.log(openReserve);
     const handleClick = (e) => {
         e.preventDefault();
         if (user) {
-            setopenRoomBook(true);
+            setopenReserve(true); // Set AvailableRoom to true here
             console.log("event fired");
         } else {
             navigate("/login");
@@ -163,14 +166,14 @@ const HotalRoom = () => {
                             <h2>
                                 <b>₹{data.leastPrice * days * options.room}</b> ({days} nights)
                             </h2>
-                            <button onClick={handleClick}>Reserve or Book Now!</button>
+                            {/* <button onClick={handleClick}>Reserve or Book Now!</button> */}
                         </div>
                     </div>
                 </div>
                 <MailList />
                 <Footer />
             </div>}
-            {openRoomBook && <ReservePage setopenRoomBook={setopenRoomBook} hotelId={id} />}
+            {openReserve && <ReservePage setOpen={setopenReserve} hotelId={id} />}
         </div>
     );
 };

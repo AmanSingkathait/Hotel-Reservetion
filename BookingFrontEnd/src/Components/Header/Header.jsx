@@ -19,7 +19,7 @@ import { AuthContext } from "../../Context/AuthContext";
 
 
 const Header = ({ type }) => {
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const [Opendate, setOpendate] = useState(false);
     const [destination, setdestination] = useState("");
@@ -128,13 +128,9 @@ const Header = ({ type }) => {
                                             className="HeaderSearchText"
                                             onClick={() => {
                                                 setOpendate(!Opendate);
-                                            }}
-                                        >
+                                            }}>
                                             {`${format(dates[0].startDate, "MM/dd/yyyy")} To ${format(
-                                                dates[0].endDate,
-                                                "MM/dd/yyyy"
-                                            )}`}
-                                        </span>
+                                                dates[0].endDate, "MM/dd/yyyy")}`}</span>
                                         {Opendate && (
                                             <DateRange
                                                 editableDateInputs={true}
