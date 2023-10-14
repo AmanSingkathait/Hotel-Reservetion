@@ -23,6 +23,8 @@ route.post("/:hotelid", verifyAdmin, async (req, res, next) => {
         next(err);
     }
 })
+
+
 route.put("/:id", verifyAdmin, async (req, res, next) => {
     try {
         const UpdateRoom = await Rooms.findByIdAndUpdate(req.params.id,
@@ -30,6 +32,22 @@ route.put("/:id", verifyAdmin, async (req, res, next) => {
         res.status(200).json(UpdateRoom)
     } catch (e) {
         res.status(500).json(e);
+    }
+})
+// TODO --> route request 
+route.put("availability/:id", async (req, res, next) => {
+    try {
+        await Rooms.updateOne(
+            { "roomNumbers._id": req.params.id },
+            {
+                $push: {
+                    "roomNumbers.$.unavailableDates": req.body.dates
+                },
+            }
+        );
+        res.status(200).json("Room status has been updated.");
+    } catch (err) {
+        next(err);
     }
 })
 

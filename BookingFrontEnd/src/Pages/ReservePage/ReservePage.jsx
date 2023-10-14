@@ -22,12 +22,22 @@ const ReservePage = ({ setOpen, hotelId }) => {
     }
     var i = 1;
     console.log(selectedRoom);
-    const handleClick = (e) => {
+    // TODO --> handle click button 
+    const handleClick = async (e) => {
         e.preventDefault();
+        await Promise.all(selectedRoom.map(roomId =>{
+            const response = fetch("")
+        }))
+        try {
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
+
     const { dates } = useContext(SearchContext);
     console.log(dates);
-    
+
     const getDatesInRange = (startDate, endDate) => {
         const start = new Date(startDate);
         const end = new Date(endDate);
@@ -39,7 +49,14 @@ const ReservePage = ({ setOpen, hotelId }) => {
         }
         return dates;
     }; 
-    console.log(getDatesInRange(dates[0].startDate, dates[0].endDate));
+    const alldates = (getDatesInRange(dates[0].startDate, dates[0].endDate));
+
+    const isAvailable = (roomNumber)=>{
+        const isFound = roomNumber.unavailableDates.some(date=>{
+            alldates.includes(new Date(date).getTime())
+        })
+        return !isFound;
+    }
     return (
         <div className='reserve'>
             {loading ? "Loading " : (<div className="rContainer">
@@ -63,7 +80,7 @@ const ReservePage = ({ setOpen, hotelId }) => {
                                             type="checkbox"
                                             value={roomNumber._id}
                                             onChange={handleSelect}
-                                        // disabled={!isAvailable(roomNumber)}
+                                            disabled={!isAvailable(roomNumber)}
                                         />
                                     </div>
                                 ))}
