@@ -22,9 +22,10 @@ route.post('/register', async (req, res, next) => {
         next(err)
     }
 })
+
 route.post('/LoginUser', async (req, res, next) => {
     try {
-        const userdata = await User.findOne({ username: req.body.username });
+        const userdata = await User.findOne({ email: req.body.email });
         if (!userdata) {
             return next(createError(404, "User not found"))
         }

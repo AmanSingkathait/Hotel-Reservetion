@@ -5,8 +5,10 @@ import PropTypes from 'prop-types';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { SearchContext } from '../../Context/SearchContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ReservePage = ({ setOpen, hotelId }) => {
+
     const navigate = useNavigate();
     const { data, loading } = useRequest(`http://localhost:2000/api/hotels//room/${hotelId}`);
     console.log(data)
@@ -60,7 +62,7 @@ const ReservePage = ({ setOpen, hotelId }) => {
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({dates:alldates}),
+                        body: JSON.stringify({ dates: alldates }),
                     });
                     if (response.ok) {
                         const jsondata = await response.json();
@@ -71,8 +73,15 @@ const ReservePage = ({ setOpen, hotelId }) => {
             );
             setOpen(false);
             navigate("/");
+            toast.success("room registered Successful", {
+                className: 'toast-message',
+                autoClose: 1500,
+            });
         } catch (err) {
-            console.log(err);
+            toast.error(`${err}`, {
+                className: 'toast-message',
+                autoClose: 1500,
+            })
         }
     };
     return (

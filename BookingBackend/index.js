@@ -7,6 +7,7 @@ const hotelsRoute = require('./api/Routes/hotels');
 const roomRoute = require('./api/Routes/room');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const User = require('../BookingBackend/api/Models/UserModels')
 
 const app = express();
 const port = process.env.PORT || 2000;
@@ -27,7 +28,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomRoute);
-
 
 
 app.use((err, req, res, next) => {
