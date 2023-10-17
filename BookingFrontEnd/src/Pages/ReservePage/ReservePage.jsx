@@ -4,8 +4,10 @@ import useRequest from '../../Hooks/useRequest';
 import PropTypes from 'prop-types';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { SearchContext } from '../../Context/SearchContext';
+import { useNavigate } from 'react-router-dom';
 
 const ReservePage = ({ setOpen, hotelId }) => {
+    const navigate = useNavigate();
     const { data, loading } = useRequest(`http://localhost:2000/api/hotels//room/${hotelId}`);
     console.log(data)
     const closeBtn = (e) => {
@@ -22,18 +24,6 @@ const ReservePage = ({ setOpen, hotelId }) => {
     }
     var i = 1;
     console.log(selectedRoom);
-    // TODO --> handle click button 
-    const handleClick = async (e) => {
-        e.preventDefault();
-        await Promise.all(selectedRoom.map(roomId =>{
-            const response = fetch("")
-        }))
-        try {
-            console.log(data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const { dates } = useContext(SearchContext);
     console.log(dates);
@@ -48,48 +38,83 @@ const ReservePage = ({ setOpen, hotelId }) => {
             date.setDate(date.getDate() + 1);
         }
         return dates;
-    }; 
+    };
     const alldates = (getDatesInRange(dates[0].startDate, dates[0].endDate));
 
-    const isAvailable = (roomNumber)=>{
-        const isFound = roomNumber.unavailableDates.some(date=>{
+    const isAvailable = (roomNumber) => {
+        const isFound = roomNumber.unavailableDates.some((date) =>
             alldates.includes(new Date(date).getTime())
-        })
+        );
         return !isFound;
-    }
+    };
+
+    console.log(alldates);
+    console.log(selectedRoom);
+
+    const handleClick = async () => {
+        try {
+            await Promise.all(
+                selectedRoom.map(async (roomId) => {
+                    const response = await fetch(`http://localhost:2000/api/rooms/RoomId/${roomId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({dates:alldates}),
+                    });
+                    if (response.ok) {
+                        const jsondata = await response.json();
+                        console.log(jsondata);
+                        return jsondata;
+                    }
+                })
+            );
+            setOpen(false);
+            navigate("/");
+        } catch (err) {
+            console.log(err);
+        }
+    };
     return (
-        <div className='reserve'>
-            {loading ? "Loading " : (<div className="rContainer">
-                <AiFillCloseSquare className='closeButton' onClick={closeBtn} />
-                <span> Select Your Room</span>
-                {data.map(item => {
-                    return (
-                        <div className="rItem" key={item._id}>
-                            {/* <img src={item.img} alt="" /> */}
-                            <div className="rItemInfo">
-                                <div className="rTitle">{item.title}</div>
-                                <div className="rDesc">{item.desc}</div>
-                                <div className="rMax">
-                                    Max people: <b>{item.Maxperople}</b>
-                                </div>
-                                <div className="rPrice">{item.price}</div>
-                                {item.roomNumbers.map((roomNumber) => (
-                                    <div className="room" key={i++}>
-                                        <label>{roomNumber.number}</label>
-                                        <input
-                                            type="checkbox"
-                                            value={roomNumber._id}
-                                            onChange={handleSelect}
-                                            disabled={!isAvailable(roomNumber)}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
+        <div className='reserve' >
+            {
+                loading ? "Loading " : (
+                    <div className="rContainer">
+                        <div className="rCantainerFlex">
+                            <span> Select Your Room : </span>
+                            <AiFillCloseSquare className='closeButton' onClick={closeBtn} />
                         </div>
-                    )
-                })}
-                <button onClick={handleClick} className="rButton"> Reserve Now!</button>
-            </div>)}
+                        {data.map(item => {
+                            return (
+                                <div className="rItem" key={item._id}>
+                                    {/* <img src={item.img} alt="" /> */}
+                                    <div className="rItemInfo">
+                                        <div className="rTitle">{item.title}</div>
+                                        <div className="rDesc">{item.desc}</div>
+                                        <div className="rMax">
+                                            Max people: <b>{item.Maxperople}</b>
+                                        </div>
+                                        <div className="rPrice">₹{item.price}</div>
+                                    </div>
+                                    <div className="roomFlex">
+                                        {item.roomNumbers.map((roomNumber) => (
+                                            <div className="room" key={i++}>
+                                                <label>{roomNumber.number}</label>
+                                                <input
+                                                    type="checkbox"
+                                                    value={roomNumber._id}
+                                                    onChange={handleSelect}
+                                                    disabled={!isAvailable(roomNumber)}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        })}
+                        <button onClick={handleClick} className="rButton"> Reserve Now!</button>
+                    </div>)
+            }
         </div>
     )
 }

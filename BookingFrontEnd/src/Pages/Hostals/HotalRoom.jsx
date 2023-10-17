@@ -79,7 +79,6 @@ const HotalRoom = () => {
     }
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
-
     const [openReserve, setopenReserve] = useState(false);
     console.log(openReserve);
     const handleClick = (e) => {

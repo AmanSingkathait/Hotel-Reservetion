@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
 .reserve {
     width: 100vw;
     height: 100vh;
@@ -11,72 +13,58 @@
 }
 
 .rContainer {
-    background-color: white;
-    padding: 20px;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 449px;
+    padding: 1rem;
+    background-color: aliceblue;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.rClose {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
+.rCantainerFlex {
+    display: flex;
+    justify-content: space-between;
 }
 
 .rItem {
     display: flex;
-    align-items: center;
-    gap: 50px;
-    padding: 20px;
-}
-
-.rInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
 
 .rTitle {
-    font-weight: 500;
+    font-weight: 600;
+    font-family: 'Young Serif', serif;
+    font-size: 15px;
 }
-
-.rDesc {
-    font-weight: 300;
+.rDesc , .rMax{
+    font-size: 15px;
+    font-weight: 400;
 }
-
-.rMax {
-    font-size: 12px;
+b{
+    font-weight: 600;
 }
-
-.rPrice {
-    font-weight: 500;
-}
-
-.rSelectRooms {
+.room{
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    font-size: 8px;
-    color: gray;
+    gap: .5rem;
 }
-
-.room {
-    display: flex;
-    flex-direction: column;
-}
-
-.rButton {
-    border: none;
-    padding: 10px 20px;
-    background-color: #0071c2;
-    color: white;
-    font-weight: bold;
+.room input{
     cursor: pointer;
+}
+.rButton{
+    margin-top: 2rem;
+    padding: 1rem 0rem;
+    text-align: center;
+    background-color:#001f4a;
+    color: aliceblue;
+    border: none;
     border-radius: 5px;
-    width: 100%;
-    margin-top: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 16px;
 }
 .closeButton{
-    font-size: 1.8rem;
-    
+    font-size: 25px;
+    cursor: pointer;
 }

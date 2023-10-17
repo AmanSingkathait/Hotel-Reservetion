@@ -25,17 +25,18 @@ route.post("/:hotelid", verifyAdmin, async (req, res, next) => {
 })
 
 
-route.put("/:id", verifyAdmin, async (req, res, next) => {
-    try {
-        const UpdateRoom = await Rooms.findByIdAndUpdate(req.params.id,
-            { $set: req.body }, { new: true })
-        res.status(200).json(UpdateRoom)
-    } catch (e) {
-        res.status(500).json(e);
-    }
-})
+// route.put("/:id", verifyAdmin, async (req, res, next) => {
+//     try {
+//         const UpdateRoom = await Rooms.findByIdAndUpdate(req.params.id,
+//             { $set: req.body }, { new: true })
+//         res.status(200).json(UpdateRoom)
+//     } catch (e) {
+//         res.status(500).json(e);
+//     }
+// })
+
 // TODO --> route request 
-route.put("availability/:id", async (req, res, next) => {
+route.put("/RoomId/:id", async (req, res, next) => {
     try {
         await Rooms.updateOne(
             { "roomNumbers._id": req.params.id },
@@ -49,7 +50,7 @@ route.put("availability/:id", async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-})
+});
 
 route.delete("/:id/:hotelid", verifyAdmin, async (req, res, next) => {
     const hotelId = req.params.hotelid;

@@ -28,6 +28,8 @@ app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomRoute);
 
+
+
 app.use((err, req, res, next) => {
     const errorstatus = err.status || 500
     const errormessage = err.message || "something went wrong!"
