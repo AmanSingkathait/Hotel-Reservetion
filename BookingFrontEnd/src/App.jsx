@@ -8,7 +8,6 @@ import HotalRoom from './Pages/Hostals/HotalRoom';
 import Login from './Pages/Login/Login';
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>

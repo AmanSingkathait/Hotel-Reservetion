@@ -3,12 +3,12 @@ import "./Navbar.css"
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import {toast} from "react-toastify"
+
 const Navbar = () => {
     const { user, dispatch } = useContext(AuthContext);
     const handleLogin = (e) => {
         e.preventDefault();
         dispatch({ type: "LOGIN_START" });
-        // localStorage.clear();
         toast.success("Logout successfully",{
             className: 'toast-message',
             autoClose: 1500,
