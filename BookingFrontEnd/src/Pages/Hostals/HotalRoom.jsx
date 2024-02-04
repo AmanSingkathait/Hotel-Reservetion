@@ -34,12 +34,9 @@ const HotalRoom = () => {
         return diffDays
     }
     const days = dayDifference(dates[0].endDate, dates[0].startDate);
-
     const location = useLocation();
     const [SliderNuber, setSliderNuber] = useState(0);
-
     const [ModelOpen, setModelOpen] = useState(false);
-
     const idArray = location.pathname.split("/"); 3
     const id = idArray[2];
     const { data, loading } = useRequest(`http://localhost:2000/api/hotels/find/${id}`);
