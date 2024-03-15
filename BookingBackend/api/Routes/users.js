@@ -48,6 +48,16 @@ route.get("/:id", verfyUser, async (req, res) => {
     }
 })
 
+route.get("/findingUser/:id",async (req,res)=>{
+    try {
+        const userUser = await User.findById(req.params.id);
+        console.log(userUser)
+        res.status(200).json(userUser)
+    } catch (e) {
+        res.status(500).json(e);
+    }
+})
+
 //GET ALL
 route.get("/", verifyAdmin, async (req, res, next) => {
     try {
